@@ -74,8 +74,8 @@ public class ZipArchiver implements Archiver {
     @Override
     public void unZip(InputStream inputStream) throws IOException, ArchiveCorrupted, NotStreamSpecified {
         String currentDir = System.getProperty("user.dir");
-        if (inputStream == null) {
-            throw new NotStreamSpecified("Не задан входной поток InputStream");
+        if (inputStream == null || inputStream.available() == 0) {
+            throw new NotStreamSpecified("Не задан входной поток InputStream или он пустой");
         }
         try(ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
             ZipEntry zipEntry = zipInputStream.getNextEntry();
@@ -102,7 +102,7 @@ public class ZipArchiver implements Archiver {
                             // Каталога не существует, значит файл архивировался без каталога, но сохранен с указанием пути.
                             // Создадим необходимую структуру каталогов.
                             // TODO Если нужно будет сохранять их в текущий каталог без вложенные, то нужно будет заменить directory.mkdirs() на код, который это сделает.
-                            Files.createDirectories(file.toPath());
+                            Files.createDirectories(directory.toPath());
                         }
                     }
                     // разархивируем файл и сохраним на диске

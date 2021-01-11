@@ -1,9 +1,5 @@
 package store.sokolov.arch;
 
-import store.sokolov.arch.exception.ArchiveCorrupted;
-import store.sokolov.arch.exception.NotFilesSpecified;
-import store.sokolov.arch.exception.NotStreamSpecified;
-
 import java.util.Arrays;
 
 /**
